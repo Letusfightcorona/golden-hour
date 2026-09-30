@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import knowledge from "@/data/knowledge.json";
 import samples from "@/data/sample-sms.json";
 import { extractEvidence, type Evidence } from "@/lib/extract";
-import { callScript1930, type Lang } from "@/lib/script";
+import type { Lang } from "@/lib/script";
+import Steps from "./Steps";
+import { decodeCase } from "@/lib/caselink";
 import type { BrainResult, ChatTurn } from "@/lib/brain";
 
 type Msg =
@@ -61,15 +63,6 @@ function greeting(lang: Lang): Msg[] {
   return [...knowledge.comfort[lang], UI[lang].askSms].map((text) => ({ from: "bot", kind: "text", text }));
 }
 
-function speak(lines: string[], lang: Lang) {
-  if (typeof window === "undefined" || !window.speechSynthesis) return;
-  const u = new SpeechSynthesisUtterance(lines.join(" "));
-  u.lang = lang === "hi" ? "hi-IN" : "en-IN";
-  u.rate = 0.9;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
-}
-
 export default function Chat() {
   const [lang, setLang] = useState<Lang>("hi");
   const [msgs, setMsgs] = useState<Msg[]>(() => greeting("hi"));
@@ -83,6 +76,16 @@ export default function Chat() {
   const fileInput = useRef<HTMLInputElement>(null);
   const bottom = useRef<HTMLDivElement>(null);
   const t = UI[lang];
+
+  // Opened from a WhatsApp link: skip intake and show the evidence card straight away.
+  useEffect(() => {
+    const param = new URLSearchParams(window.location.search).get("case");
+    const ev = param ? decodeCase(param) : null;
+    if (!ev) return;
+    shownCard.current = JSON.stringify(ev);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of the URL after mount
+    setMsgs((m) => [...m, { from: "bot", kind: "evidence", evidence: ev }]);
+  }, []);
 
   useEffect(() => {
     if (msgs.at(-1)?.kind !== "steps") bottom.current?.scrollIntoView({ behavior: "smooth" });
@@ -309,56 +312,6 @@ function EvidenceCard({ initial, lang, onConfirm }: { initial: Evidence; lang: L
         </button>
       )}
     </Bubble>
-  );
-}
-
-function Steps({ evidence, lang }: { evidence: Evidence; lang: Lang }) {
-  const script = callScript1930(evidence, lang);
-  const top = useRef<HTMLDivElement>(null);
-  useEffect(() => top.current?.scrollIntoView({ behavior: "smooth", block: "start" }), []);
-  return (
-    <div ref={top} className="scroll-mt-4 space-y-3">
-      {knowledge.steps.map((s) => (
-        <div key={s.id} className="rounded-2xl border border-stone-200 bg-white p-4 shadow-sm dark:border-stone-800 dark:bg-stone-900">
-          <div className="flex items-baseline gap-2">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-600 text-sm font-semibold text-white">{s.order}</span>
-            <h2 className="font-semibold">{s.title[lang]}</h2>
-          </div>
-          {"only_if" in s && s.only_if && <p className="mt-1 text-xs text-stone-500">{s.only_if[lang]}</p>}
-          <p className="mt-2 text-sm text-stone-700 dark:text-stone-300">{s.why[lang]}</p>
-
-          {s.id === "call_1930" && (
-            <div className="mt-3 rounded-xl bg-amber-50 p-3 dark:bg-amber-950/40">
-              <ol className="space-y-1 text-lg leading-snug">
-                {script.map((line, i) => (
-                  <li key={i}>{line}</li>
-                ))}
-              </ol>
-              <div className="mt-3 flex gap-2">
-                <a href="tel:1930" className="flex-1 rounded-lg bg-red-600 py-2 text-center font-semibold text-white">📞 1930</a>
-                <button onClick={() => speak(script, lang)} className="flex-1 rounded-lg border border-amber-600 py-2 text-amber-700 dark:text-amber-400">
-                  {UI[lang].readAloud}
-                </button>
-              </div>
-            </div>
-          )}
-
-          {"prep_list" in s && s.prep_list && (
-            <ul className="mt-2 list-disc pl-5 text-sm text-stone-600 dark:text-stone-400">
-              {s.prep_list[lang].map((p) => (
-                <li key={p}>{p}</li>
-              ))}
-            </ul>
-          )}
-
-          {"url" in s && s.url && (
-            <a href={s.url} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm text-amber-700 underline dark:text-amber-400">
-              {UI[lang].open} {s.url.replace("https://", "")}
-            </a>
-          )}
-        </div>
-      ))}
-    </div>
   );
 }
 

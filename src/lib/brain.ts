@@ -49,7 +49,7 @@ How to talk:
 - Reply in the victim's own language and script. If they write Hinglish in Roman letters, reply in simple Hinglish in Roman letters. If they write Devanagari, reply in Devanagari. Otherwise English.
 - Short messages: two or three sentences. Warm, plain, never judgmental. Never say or imply it was their fault.
 - Ask for one thing at a time. The most useful thing is the bank or UPI SMS about the debit, or a screenshot of it. Next most useful: the scammer's number or chat screenshot.
-- Once you have an amount or transaction ID, tell them you've noted the details and ask them to check the card that appears. Do not list the next steps yourself; the app shows them.
+- Once you have an amount or transaction ID, tell them you've noted the details and that the next steps are right below. Do not list the next steps yourself; the app shows them.
 - Money is moving right now, so gently keep urgency: calling 1930 soon matters.
 - If they mention self-harm or not wanting to live, respond with care and tell them they can call Tele-MANAS on 14416, free and 24x7, before anything else.
 
@@ -93,7 +93,7 @@ function crossCheck(llm: z.infer<typeof EvidenceSchema>, turns: ChatTurn[]): Evi
   };
 }
 
-export async function think(turns: ChatTurn[]): Promise<BrainResult> {
+export async function think(turns: ChatTurn[], opts?: { timeoutMs?: number }): Promise<BrainResult> {
   client ??= new Anthropic();
   const response = await client.beta.messages.parse({
     model: MODEL,
@@ -103,7 +103,7 @@ export async function think(turns: ChatTurn[]): Promise<BrainResult> {
     output_config: { effort: "low", format: betaZodOutputFormat(ReplySchema) },
     system: [{ type: "text", text: SYSTEM, cache_control: { type: "ephemeral" } }],
     messages: toMessages(turns),
-  });
+  }, opts?.timeoutMs ? { timeout: opts.timeoutMs, maxRetries: 0 } : undefined);
 
   if (response.stop_reason === "refusal" || !response.parsed_output) {
     throw new Error(`No usable reply (stop_reason: ${response.stop_reason})`);
