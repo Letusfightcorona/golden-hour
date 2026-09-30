@@ -20,6 +20,14 @@ const T = {
     address: "Address",
     packTitle: "Copy these into the portal",
     whatHappened: "What happened",
+    f_bank: "Bank / wallet",
+    f_acct: "Account no. (last digits)",
+    f_utr: "Transaction ID / UTR",
+    f_amount: "Amount (Rs.)",
+    f_date: "Date (DD/MM/YYYY)",
+    f_time: "Time",
+    f_to: "Money went to (UPI ID / account)",
+    f_suspect: "Suspect mobile",
     download: "Download bank letter (PDF)",
     letterHint: "Print or email it to your branch and to the bank's grievance email. Ask for a complaint number.",
     ackLabel: "cybercrime.gov.in acknowledgement no.",
@@ -41,7 +49,15 @@ const T = {
     email: "ईमेल",
     address: "पता",
     packTitle: "इन्हें पोर्टल में कॉपी करें",
-    whatHappened: "क्या हुआ",
+    whatHappened: "क्या हुआ (अंग्रेज़ी में, पोर्टल के लिए)",
+    f_bank: "बैंक / वॉलेट",
+    f_acct: "अकाउंट नंबर (आखिरी अंक)",
+    f_utr: "ट्रांज़ैक्शन ID / UTR",
+    f_amount: "राशि (Rs.)",
+    f_date: "तारीख (DD/MM/YYYY)",
+    f_time: "समय",
+    f_to: "पैसा कहाँ गया (UPI ID / अकाउंट)",
+    f_suspect: "धोखेबाज़ का मोबाइल",
     download: "बैंक पत्र डाउनलोड करें (PDF)",
     letterHint: "इसे प्रिंट करके ब्रांच में दें या बैंक के शिकायत ईमेल पर भेजें। शिकायत नंबर ज़रूर लें।",
     ackLabel: "cybercrime.gov.in acknowledgement नंबर",
@@ -54,22 +70,31 @@ const T = {
   },
 } as const;
 
-type Case = Victim & { bank_ref: string; bank_report_date: string };
+type Case = Victim & { bank_ref: string; bank_report_date: string; utr?: string };
 
 const STORE = "golden-hour-case";
 
-function useCase(): [Case, (patch: Partial<Case>) => void] {
+// Personal details carry over between cases; complaint numbers and dates reset when the transaction changes.
+function useCase(utr?: string): [Case, (patch: Partial<Case>) => void] {
   const [c, setC] = useState<Case>({ ...emptyVictim, bank_ref: "", bank_report_date: todayIso() });
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORE);
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate once from storage after mount
-      if (saved) setC((prev) => ({ ...prev, ...JSON.parse(saved) }));
+      if (!saved) return;
+      const stored: Case = JSON.parse(saved);
+      const sameCase = !stored.utr || !utr || stored.utr === utr;
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate from storage after mount
+      setC((prev) => ({
+        ...prev,
+        ...stored,
+        ...(sameCase ? {} : { ncrp_ack: "", bank_ref: "", bank_report_date: todayIso() }),
+        utr,
+      }));
     } catch {}
-  }, []);
+  }, [utr]);
   const update = (patch: Partial<Case>) =>
     setC((prev) => {
-      const next = { ...prev, ...patch };
+      const next = { ...prev, ...patch, utr };
       try {
         localStorage.setItem(STORE, JSON.stringify(next));
       } catch {}
@@ -82,9 +107,30 @@ function speak(lines: string[], lang: Lang) {
   if (typeof window === "undefined" || !window.speechSynthesis) return;
   const u = new SpeechSynthesisUtterance(lines.join(" "));
   u.lang = lang === "hi" ? "hi-IN" : "en-IN";
+  const voice = window.speechSynthesis.getVoices().find((v) => v.lang.replace("_", "-").startsWith(u.lang.slice(0, 2)));
+  if (voice) u.voice = voice;
   u.rate = 0.9;
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(u);
+}
+
+// navigator.clipboard needs HTTPS and permission; fall back to the old selection trick (in-app browsers, http).
+async function copyText(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    ta.remove();
+    return ok;
+  }
 }
 
 function CopyButton({ text, lang }: { text: string; lang: Lang }) {
@@ -93,11 +139,10 @@ function CopyButton({ text, lang }: { text: string; lang: Lang }) {
     <button
       type="button"
       onClick={async () => {
-        try {
-          await navigator.clipboard.writeText(text);
+        if (await copyText(text)) {
           setDone(true);
           setTimeout(() => setDone(false), 1500);
-        } catch {}
+        }
       }}
       className="shrink-0 rounded-md border border-amber-600 px-2 py-0.5 text-xs text-amber-700 dark:text-amber-400"
     >
@@ -138,14 +183,14 @@ function FilingPack({ ev, c, update, lang }: { ev: Evidence; c: Case; update: (p
     [t.name, c.name],
     [t.mobile, c.mobile],
     [t.email, c.email],
-    ["Bank / wallet", ev.bank],
-    ["Account no. (last digits)", ev.account_last4],
-    ["Transaction ID / UTR", ev.utr],
-    ["Amount (Rs.)", ev.amount?.toString()],
-    ["Date", ev.date],
-    ["Time", ev.time],
-    ["Money went to (UPI ID / account)", ev.upi_id ?? ev.payee],
-    ["Suspect mobile", ev.scammer_phone],
+    [t.f_bank, ev.bank],
+    [t.f_acct, ev.account_last4],
+    [t.f_utr, ev.utr],
+    [t.f_amount, ev.amount?.toString()],
+    [t.f_date, ev.date?.split("-").reverse().join("/")],
+    [t.f_time, ev.time],
+    [t.f_to, ev.upi_id ?? ev.payee],
+    [t.f_suspect, ev.scammer_phone],
     [t.whatHappened, incidentSummary(ev)],
   ];
   return (
@@ -241,7 +286,7 @@ function Tracker({ ev, c, update, lang }: { ev: Evidence; c: Case; update: (p: P
 
 export default function Steps({ evidence, lang }: { evidence: Evidence; lang: Lang }) {
   const script = callScript1930(evidence, lang);
-  const [c, update] = useCase();
+  const [c, update] = useCase(evidence.utr);
   const top = useRef<HTMLDivElement>(null);
   useEffect(() => top.current?.scrollIntoView({ behavior: "smooth", block: "start" }), []);
   const t = T[lang];

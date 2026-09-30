@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+:root {
+  color-scheme: light dark;
+}
+
 body {
   font-family: system-ui, "Noto Sans", "Noto Sans Devanagari", "Segoe UI", Roboto, sans-serif;
+  background: #fafaf9; /* stone-50 */
+  color: #1c1917; /* stone-900 */
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0c0a09; /* stone-950 */
+    color: #f5f5f4; /* stone-100 */
+  }
 }

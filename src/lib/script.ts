@@ -1,4 +1,5 @@
 import type { Evidence } from "./extract";
+import { formatDate } from "./deadlines";
 
 export type Lang = "en" | "hi";
 
@@ -9,7 +10,7 @@ function rupees(n?: number): string {
 // What the victim reads out on the 1930 call. Missing fields are left as blanks to fill.
 export function callScript1930(ev: Evidence, lang: Lang): string[] {
   const blank = "____";
-  const when = [ev.date, ev.time].filter(Boolean).join(" ") || blank;
+  const when = [ev.date ? formatDate(ev.date, lang) : undefined, ev.time].filter(Boolean).join(", ") || blank;
   if (lang === "hi") {
     return [
       "नमस्ते, मेरे साथ ऑनलाइन धोखाधड़ी हुई है। मैं शिकायत दर्ज करना चाहता/चाहती हूँ।",
