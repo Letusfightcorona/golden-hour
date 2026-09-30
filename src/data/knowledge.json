@@ -1,0 +1,112 @@
+{
+  "_about": "Curated steps, deadlines and links. The assistant must quote procedure from here, never invent it. Items with verified=false still need a check against the official source before the demo.",
+  "last_reviewed": "2026-09-30",
+  "steps": [
+    {
+      "id": "call_1930",
+      "order": 1,
+      "title": { "en": "Call 1930 now", "hi": "अभी 1930 पर कॉल करें" },
+      "why": {
+        "en": "1930 is the National Cyber Crime Helpline. Reporting quickly lets police and banks try to put a hold on the money before it moves again.",
+        "hi": "1930 राष्ट्रीय साइबर अपराध हेल्पलाइन है। जल्दी रिपोर्ट करने से पुलिस और बैंक पैसे को आगे जाने से पहले रोकने की कोशिश कर सकते हैं।"
+      },
+      "keep_ready": ["amount", "utr", "datetime", "beneficiary", "bank", "scammer_phone"],
+      "source": "https://cybercrime.gov.in",
+      "verified": true
+    },
+    {
+      "id": "file_ncrp",
+      "order": 2,
+      "title": { "en": "File on cybercrime.gov.in", "hi": "cybercrime.gov.in पर शिकायत दर्ज करें" },
+      "why": {
+        "en": "The National Cyber Crime Reporting Portal gives you an acknowledgement number. Keep it: the bank and police will ask for it.",
+        "hi": "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल आपको एक acknowledgement नंबर देता है। इसे संभाल कर रखें, बैंक और पुलिस इसे मांगेंगे।"
+      },
+      "prep_list": [
+        "Your name, mobile number, email, address",
+        "Bank or wallet the money left from, account number",
+        "Transaction ID / UTR, amount, date and time of each debit",
+        "Where the money went: UPI ID, account number, wallet",
+        "Scammer details: phone number, website, app, social media handle",
+        "Short description of what happened",
+        "Screenshots of the chat, call log and bank SMS"
+      ],
+      "url": "https://cybercrime.gov.in",
+      "note": "Prep list is based on public guidance. Exact portal field names and upload limits must be checked on the live portal before the demo.",
+      "verified": false
+    },
+    {
+      "id": "bank_letter",
+      "order": 3,
+      "title": { "en": "Write to your bank", "hi": "अपने बैंक को लिखित में सूचना दें" },
+      "why": {
+        "en": "Tell your bank in writing that the transaction was fraudulent and ask them to block the account/card and raise a dispute. The date you report matters for how much the bank must refund.",
+        "hi": "बैंक को लिखकर बताएं कि लेन-देन धोखाधड़ी था और अकाउंट/कार्ड ब्लॉक करने व dispute दर्ज करने को कहें। आप किस दिन रिपोर्ट करते हैं, इससे तय होता है कि बैंक को कितना लौटाना होगा।"
+      },
+      "rule": {
+        "name": "RBI circular on limiting customer liability in unauthorised electronic banking transactions (6 July 2017)",
+        "points": [
+          "Third-party breach (not your fault, not the bank's) reported within 3 working days: zero liability.",
+          "Reported within 4 to 7 working days: liability capped (₹5,000 to ₹25,000 depending on account type) or the transaction value, whichever is lower.",
+          "After 7 working days: as per the bank's board-approved policy.",
+          "Bank should credit the amount (shadow reversal) within 10 working days of your report and resolve within 90 days."
+        ],
+        "caveat": "This rule covers unauthorised transactions. If the victim approved the payment themselves (e.g. was tricked into entering their UPI PIN), banks often treat it as authorised. Never promise a refund; say the victim should still report and ask.",
+        "source": "https://www.rbi.org.in"
+      },
+      "verified": true
+    },
+    {
+      "id": "scores",
+      "order": 4,
+      "only_if": "a stockbroker, trading app, investment adviser or other SEBI-registered intermediary was involved",
+      "title": { "en": "Complain on SEBI SCORES", "hi": "SEBI SCORES पर शिकायत करें" },
+      "why": {
+        "en": "For investment and trading scams involving a SEBI-registered entity, SCORES is SEBI's grievance portal. Complain to the entity first; SCORES escalates if they do not resolve it.",
+        "hi": "अगर किसी SEBI-registered ब्रोकर या निवेश सलाहकार का नाम आया है, तो SCORES SEBI का शिकायत पोर्टल है। पहले उस कंपनी से शिकायत करें, हल न हो तो SCORES पर।"
+      },
+      "url": "https://scores.sebi.gov.in",
+      "note": "Check SCORES 2.0 timelines (entity response window and auto-escalation) on the live site.",
+      "verified": false
+    },
+    {
+      "id": "escalate_rbi",
+      "order": 5,
+      "title": { "en": "Escalate to the RBI Ombudsman", "hi": "RBI लोकपाल (Ombudsman) के पास जाएं" },
+      "why": {
+        "en": "If the bank does not reply within 30 days, or you are not satisfied with its reply, you can complain to the RBI Ombudsman.",
+        "hi": "अगर बैंक 30 दिन में जवाब न दे, या जवाब से आप संतुष्ट न हों, तो RBI लोकपाल से शिकायत कर सकते हैं।"
+      },
+      "rule": {
+        "name": "Reserve Bank - Integrated Ombudsman Scheme, 2026 (in force from 1 July 2026, replaces the 2021 scheme)",
+        "points": [
+          "Complain to the bank first.",
+          "Wait for the bank's reply, up to 30 days.",
+          "File with the Ombudsman within 90 days of the bank's reply or of the 30-day window ending, whichever is later. (The old 2021 scheme allowed about a year; the new window is much shorter.)",
+          "Compensation up to ₹30 lakh for loss, plus up to ₹3 lakh for harassment and loss of time."
+        ],
+        "channels": ["https://cms.rbi.org.in", "crpc@rbi.org.in"],
+        "source": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=62052"
+      },
+      "verified": false,
+      "note": "Timelines taken from secondary summaries of RB-IOS 2026 (Angel One, Vinod Kothari, Jan 2026). Confirm against the scheme text linked in source."
+    }
+  ],
+  "deadlines": [
+    { "id": "bank_zero_liability", "days": 3, "working_days": true, "from": "transaction", "label": { "en": "Report to bank for zero liability", "hi": "ज़ीरो लायबिलिटी के लिए बैंक को रिपोर्ट करें" } },
+    { "id": "bank_limited_liability", "days": 7, "working_days": true, "from": "transaction", "label": { "en": "Report to bank for limited liability", "hi": "सीमित लायबिलिटी के लिए बैंक को रिपोर्ट करें" } },
+    { "id": "bank_shadow_credit", "days": 10, "working_days": true, "from": "bank_report", "label": { "en": "Bank should credit amount back (shadow reversal)", "hi": "बैंक को राशि वापस क्रेडिट करनी चाहिए" } },
+    { "id": "bank_reply", "days": 30, "working_days": false, "from": "bank_report", "label": { "en": "Bank reply due; after this you can go to the RBI Ombudsman", "hi": "बैंक का जवाब; इसके बाद RBI लोकपाल जा सकते हैं" } },
+    { "id": "ombudsman_last_day", "days": 120, "working_days": false, "from": "bank_report", "label": { "en": "Last day to file with RBI Ombudsman if bank never replied", "hi": "बैंक जवाब न दे तो RBI लोकपाल में शिकायत की आखिरी तारीख" } }
+  ],
+  "comfort": {
+    "en": [
+      "This is not your fault. These scams are run by organised gangs who do this full time.",
+      "You did the right thing by acting now. Let's take this one step at a time."
+    ],
+    "hi": [
+      "यह आपकी गलती नहीं है। ये धोखे पूरे-समय काम करने वाले संगठित गिरोह करते हैं।",
+      "आपने अभी कदम उठाकर सही किया। चलिए, एक-एक करके करते हैं।"
+    ]
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "_about": "Made-up SMS in the style of Indian bank/UPI alerts. All numbers, names and IDs are fictional. Used for demos and extractor tests.",
+  "samples": [
+    {
+      "id": "sbi_upi_debit",
+      "text": "Dear UPI user A/C X4521 debited by 48000.00 on date 28Sep26 trf to RAHUL KUMAR Refno 627114583920. If not u? call 1800111109. -SBI",
+      "expect": { "amount": 48000, "utr": "627114583920", "account_last4": "4521", "bank": "SBI", "direction": "debit", "payee": "RAHUL KUMAR" }
+    },
+    {
+      "id": "hdfc_upi_debit",
+      "text": "Sent Rs.15000.00\nFrom HDFC Bank A/C *7788\nTo kycupdate.help@ybl\nOn 29/09/26\nRef 627219004411\nNot You?\nCall 18002586161/SMS BLOCK UPI to 7308080808",
+      "expect": { "amount": 15000, "utr": "627219004411", "account_last4": "7788", "bank": "HDFC Bank", "direction": "debit", "upi_id": "kycupdate.help@ybl" }
+    },
+    {
+      "id": "icici_debit",
+      "text": "ICICI Bank Acct XX903 debited for Rs 25,000.00 on 29-Sep-26; refundcell@paytm credited. UPI:627230118876. Call 18002662 for dispute. SMS BLOCK 903 to 9215676766.",
+      "expect": { "amount": 25000, "utr": "627230118876", "account_last4": "903", "bank": "ICICI Bank", "direction": "debit", "upi_id": "refundcell@paytm" }
+    },
+    {
+      "id": "axis_debit",
+      "text": "INR 9,999.00 debited\nA/c no. XX1204\n30-09-26, 11:42:07\nUPI/P2A/627341220981/ELECTRICITY BIL\nNot you? SMS BLOCKUPI Cust ID to 919951860002\nAxis Bank",
+      "expect": { "amount": 9999, "utr": "627341220981", "account_last4": "1204", "bank": "Axis Bank", "direction": "debit", "time": "11:42" }
+    },
+    {
+      "id": "kotak_debit",
+      "text": "Sent Rs.2500.00 from Kotak Bank AC X6610 to courier.refund@okaxis on 30-09-26.UPI Ref 627356612004. Not you, https://kotak.com/KBANKT/Fraud",
+      "expect": { "amount": 2500, "utr": "627356612004", "account_last4": "6610", "bank": "Kotak", "direction": "debit", "upi_id": "courier.refund@okaxis" }
+    },
+    {
+      "id": "pnb_debit",
+      "text": "A/c XX3391 debited INR 74,500.00 Dt 27-09-26 12:05:33 thru UPI:627093847561.Bal INR 1,204.18 Not u?Fwd this SMS to 9264092640 to block UPI.-PNB",
+      "expect": { "amount": 74500, "utr": "627093847561", "account_last4": "3391", "bank": "PNB", "direction": "debit", "time": "12:05" }
+    },
+    {
+      "id": "bob_debit",
+      "text": "Rs.1000.00 Dr. from A/C XXXXXX8812 and Cr. to lucky.draw2026@ibl. Ref:627088194523. AvlBal:Rs5610.40(2026:09:27 18:21:40). Not you? Call 18005700-BOB",
+      "expect": { "amount": 1000, "utr": "627088194523", "account_last4": "8812", "bank": "Bank of Baroda", "direction": "debit", "upi_id": "lucky.draw2026@ibl" }
+    },
+    {
+      "id": "paytm_payment",
+      "text": "Paid Rs.3,200 to Mr Anil Traders from Paytm UPI. UPI Ref No: 627261739900. Date: 29 Sep 2026",
+      "expect": { "amount": 3200, "utr": "627261739900", "bank": "Paytm", "direction": "debit" }
+    },
+    {
+      "id": "card_debit",
+      "text": "Rs.19,850.00 spent on your SBI Credit Card ending 0042 at AMZ*GIFTCARD on 29/09/26. Trxn not done by you? Report at https://sbicard.com/Dispute",
+      "expect": { "amount": 19850, "account_last4": "0042", "bank": "SBI", "direction": "debit" }
+    },
+    {
+      "id": "scam_lure_not_bank",
+      "text": "Dear customer your electricity connection will be disconnected tonight at 9.30 pm. Please immediately contact our officer 9876012345. Thank you",
+      "expect": { "scammer_phone": "9876012345", "direction": "none" }
+    }
+  ]
+}

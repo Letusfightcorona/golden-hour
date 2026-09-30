@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Golden Hour
 
-## Getting Started
+Calm, multilingual help for people in India right after an online scam. It pulls evidence out of bank and UPI SMS, gives a pre-filled script for the 1930 helpline call, and walks the victim through cybercrime.gov.in, the bank dispute letter, SEBI SCORES and RBI Ombudsman escalation.
 
-First, run the development server:
+Hackathon build (30 Sep to 3 Oct 2026). Web first, WhatsApp sandbox next.
+
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev            # http://localhost:3000
+npm run check:samples  # regex extractor vs. the sample SMS set
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Layout
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/components/Chat.tsx`: chat UI, evidence card, step cards
+- `src/lib/extract.ts`: deterministic SMS evidence extractor (amount, UTR, bank, account, UPI ID, date, time)
+- `src/lib/script.ts`: 1930 call script in Hindi and English
+- `src/data/knowledge.json`: curated steps, rules, deadlines and sources. Procedure comes only from here. Entries with `verified: false` still need checking against the official source.
+- `src/data/sample-sms.json`: fictional SMS for demos and tests
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Status
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Day 1 (done): chat site, knowledge pack, sample SMS, offline extractor, 1930 script with read-aloud
+- Day 2: Claude-powered chat and screenshot extraction, free-text Hinglish intake
+- Day 3: cybercrime.gov.in filing pack, bank letter PDF, case tracker, WhatsApp sandbox
+- Day 4: demo polish
