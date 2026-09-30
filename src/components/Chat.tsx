@@ -263,7 +263,7 @@ export default function Chat() {
             }}
             placeholder={t.placeholder}
             rows={2}
-            className="flex-1 resize-none rounded-xl border border-stone-300 bg-stone-50 px-3 py-2 text-base text-stone-900 outline-none placeholder:text-stone-400 focus:border-amber-600 dark:border-stone-700 dark:bg-stone-950 dark:text-stone-100 dark:placeholder:text-stone-500"
+            className="flex-1 resize-none rounded-xl border border-stone-300 bg-white px-3 py-2 text-base text-stone-900 caret-amber-600 outline-none placeholder:text-stone-500 focus:border-amber-600"
           />
           <button type="submit" disabled={busy} className="rounded-xl bg-amber-600 px-4 font-medium text-white hover:bg-amber-700 disabled:opacity-50">
             {t.send}
@@ -319,7 +319,7 @@ function EvidenceCard({ initial, lang, onConfirm }: { initial: Evidence; lang: L
               onChange={(e) =>
                 setEv({ ...ev, [f.key]: parseField(f.key, e.target.value) })
               }
-              className="w-44 rounded-md border border-stone-200 bg-stone-50 px-2 py-1 text-right font-mono text-stone-900 disabled:opacity-70 dark:border-stone-700 dark:bg-stone-950 dark:text-stone-100"
+              className="w-44 rounded-md border border-stone-200 bg-white px-2 py-1 text-right font-mono text-stone-900 disabled:opacity-70"
             />
           </label>
         ))}

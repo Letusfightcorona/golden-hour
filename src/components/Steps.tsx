@@ -159,7 +159,7 @@ function Field({ label, value, onChange, type = "text" }: { label: string; value
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-0.5 w-full rounded-md border border-stone-200 bg-stone-50 px-2 py-1.5 text-stone-900 dark:border-stone-700 dark:bg-stone-950 dark:text-stone-100"
+        className="mt-0.5 w-full rounded-md border border-stone-200 bg-white px-2 py-1.5 text-stone-900"
       />
     </label>
   );
