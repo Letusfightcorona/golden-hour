@@ -5,32 +5,56 @@
     {
       "id": "call_1930",
       "order": 1,
-      "title": { "en": "Call 1930 now", "hi": "अभी 1930 पर कॉल करें" },
+      "title": {
+        "en": "Call 1930 now",
+        "hi": "अभी 1930 पर कॉल करें"
+      },
       "why": {
         "en": "1930 is the National Cyber Crime Helpline. Reporting quickly lets police and banks try to put a hold on the money before it moves again.",
         "hi": "1930 राष्ट्रीय साइबर अपराध हेल्पलाइन है। जल्दी रिपोर्ट करने से पुलिस और बैंक पैसे को आगे जाने से पहले रोकने की कोशिश कर सकते हैं।"
       },
-      "keep_ready": ["amount", "utr", "datetime", "beneficiary", "bank", "scammer_phone"],
+      "keep_ready": [
+        "amount",
+        "utr",
+        "datetime",
+        "beneficiary",
+        "bank",
+        "scammer_phone"
+      ],
       "source": "https://cybercrime.gov.in",
       "verified": true
     },
     {
       "id": "file_ncrp",
       "order": 2,
-      "title": { "en": "File on cybercrime.gov.in", "hi": "cybercrime.gov.in पर शिकायत दर्ज करें" },
+      "title": {
+        "en": "File on cybercrime.gov.in",
+        "hi": "cybercrime.gov.in पर शिकायत दर्ज करें"
+      },
       "why": {
         "en": "The National Cyber Crime Reporting Portal gives you an acknowledgement number. Keep it: the bank and police will ask for it.",
         "hi": "राष्ट्रीय साइबर अपराध रिपोर्टिंग पोर्टल आपको एक acknowledgement नंबर देता है। इसे संभाल कर रखें, बैंक और पुलिस इसे मांगेंगे।"
       },
-      "prep_list": [
-        "Your name, mobile number, email, address",
-        "Bank or wallet the money left from, account number",
-        "Transaction ID / UTR, amount, date and time of each debit",
-        "Where the money went: UPI ID, account number, wallet",
-        "Scammer details: phone number, website, app, social media handle",
-        "Short description of what happened",
-        "Screenshots of the chat, call log and bank SMS"
-      ],
+      "prep_list": {
+        "en": [
+          "Your name, mobile number, email, address",
+          "Bank or wallet the money left from, account number",
+          "Transaction ID / UTR, amount, date and time of each debit",
+          "Where the money went: UPI ID, account number, wallet",
+          "Scammer details: phone number, website, app, social media handle",
+          "Short description of what happened",
+          "Screenshots of the chat, call log and bank SMS"
+        ],
+        "hi": [
+          "आपका नाम, मोबाइल नंबर, ईमेल, पता",
+          "किस बैंक या वॉलेट से पैसा गया, अकाउंट नंबर",
+          "हर कटौती का ट्रांज़ैक्शन ID / UTR, राशि, तारीख और समय",
+          "पैसा कहाँ गया: UPI ID, अकाउंट नंबर, वॉलेट",
+          "धोखेबाज़ की जानकारी: फ़ोन नंबर, वेबसाइट, ऐप, सोशल मीडिया हैंडल",
+          "क्या हुआ, इसका छोटा विवरण",
+          "चैट, कॉल लॉग और बैंक SMS के स्क्रीनशॉट"
+        ]
+      },
       "url": "https://cybercrime.gov.in",
       "note": "Prep list is based on public guidance. Exact portal field names and upload limits must be checked on the live portal before the demo.",
       "verified": false
@@ -38,7 +62,10 @@
     {
       "id": "bank_letter",
       "order": 3,
-      "title": { "en": "Write to your bank", "hi": "अपने बैंक को लिखित में सूचना दें" },
+      "title": {
+        "en": "Write to your bank",
+        "hi": "अपने बैंक को लिखित में सूचना दें"
+      },
       "why": {
         "en": "Tell your bank in writing that the transaction was fraudulent and ask them to block the account/card and raise a dispute. The date you report matters for how much the bank must refund.",
         "hi": "बैंक को लिखकर बताएं कि लेन-देन धोखाधड़ी था और अकाउंट/कार्ड ब्लॉक करने व dispute दर्ज करने को कहें। आप किस दिन रिपोर्ट करते हैं, इससे तय होता है कि बैंक को कितना लौटाना होगा।"
@@ -59,8 +86,14 @@
     {
       "id": "scores",
       "order": 4,
-      "only_if": "a stockbroker, trading app, investment adviser or other SEBI-registered intermediary was involved",
-      "title": { "en": "Complain on SEBI SCORES", "hi": "SEBI SCORES पर शिकायत करें" },
+      "only_if": {
+        "en": "Only if a stockbroker, trading app, investment adviser or other SEBI-registered intermediary was involved",
+        "hi": "सिर्फ तब, जब कोई स्टॉकब्रोकर, ट्रेडिंग ऐप, निवेश सलाहकार या अन्य SEBI-registered संस्था शामिल हो"
+      },
+      "title": {
+        "en": "Complain on SEBI SCORES",
+        "hi": "SEBI SCORES पर शिकायत करें"
+      },
       "why": {
         "en": "For investment and trading scams involving a SEBI-registered entity, SCORES is SEBI's grievance portal. Complain to the entity first; SCORES escalates if they do not resolve it.",
         "hi": "अगर किसी SEBI-registered ब्रोकर या निवेश सलाहकार का नाम आया है, तो SCORES SEBI का शिकायत पोर्टल है। पहले उस कंपनी से शिकायत करें, हल न हो तो SCORES पर।"
@@ -72,7 +105,10 @@
     {
       "id": "escalate_rbi",
       "order": 5,
-      "title": { "en": "Escalate to the RBI Ombudsman", "hi": "RBI लोकपाल (Ombudsman) के पास जाएं" },
+      "title": {
+        "en": "Escalate to the RBI Ombudsman",
+        "hi": "RBI लोकपाल (Ombudsman) के पास जाएं"
+      },
       "why": {
         "en": "If the bank does not reply within 30 days, or you are not satisfied with its reply, you can complain to the RBI Ombudsman.",
         "hi": "अगर बैंक 30 दिन में जवाब न दे, या जवाब से आप संतुष्ट न हों, तो RBI लोकपाल से शिकायत कर सकते हैं।"
@@ -85,7 +121,10 @@
           "File with the Ombudsman within 90 days of the bank's reply or of the 30-day window ending, whichever is later. (The old 2021 scheme allowed about a year; the new window is much shorter.)",
           "Compensation up to ₹30 lakh for loss, plus up to ₹3 lakh for harassment and loss of time."
         ],
-        "channels": ["https://cms.rbi.org.in", "crpc@rbi.org.in"],
+        "channels": [
+          "https://cms.rbi.org.in",
+          "crpc@rbi.org.in"
+        ],
         "source": "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx?prid=62052"
       },
       "verified": false,
@@ -93,11 +132,56 @@
     }
   ],
   "deadlines": [
-    { "id": "bank_zero_liability", "days": 3, "working_days": true, "from": "transaction", "label": { "en": "Report to bank for zero liability", "hi": "ज़ीरो लायबिलिटी के लिए बैंक को रिपोर्ट करें" } },
-    { "id": "bank_limited_liability", "days": 7, "working_days": true, "from": "transaction", "label": { "en": "Report to bank for limited liability", "hi": "सीमित लायबिलिटी के लिए बैंक को रिपोर्ट करें" } },
-    { "id": "bank_shadow_credit", "days": 10, "working_days": true, "from": "bank_report", "label": { "en": "Bank should credit amount back (shadow reversal)", "hi": "बैंक को राशि वापस क्रेडिट करनी चाहिए" } },
-    { "id": "bank_reply", "days": 30, "working_days": false, "from": "bank_report", "label": { "en": "Bank reply due; after this you can go to the RBI Ombudsman", "hi": "बैंक का जवाब; इसके बाद RBI लोकपाल जा सकते हैं" } },
-    { "id": "ombudsman_last_day", "days": 120, "working_days": false, "from": "bank_report", "label": { "en": "Last day to file with RBI Ombudsman if bank never replied", "hi": "बैंक जवाब न दे तो RBI लोकपाल में शिकायत की आखिरी तारीख" } }
+    {
+      "id": "bank_zero_liability",
+      "days": 3,
+      "working_days": true,
+      "from": "transaction",
+      "label": {
+        "en": "Report to bank for zero liability",
+        "hi": "ज़ीरो लायबिलिटी के लिए बैंक को रिपोर्ट करें"
+      }
+    },
+    {
+      "id": "bank_limited_liability",
+      "days": 7,
+      "working_days": true,
+      "from": "transaction",
+      "label": {
+        "en": "Report to bank for limited liability",
+        "hi": "सीमित लायबिलिटी के लिए बैंक को रिपोर्ट करें"
+      }
+    },
+    {
+      "id": "bank_shadow_credit",
+      "days": 10,
+      "working_days": true,
+      "from": "bank_report",
+      "label": {
+        "en": "Bank should credit amount back (shadow reversal)",
+        "hi": "बैंक को राशि वापस क्रेडिट करनी चाहिए"
+      }
+    },
+    {
+      "id": "bank_reply",
+      "days": 30,
+      "working_days": false,
+      "from": "bank_report",
+      "label": {
+        "en": "Bank reply due; after this you can go to the RBI Ombudsman",
+        "hi": "बैंक का जवाब; इसके बाद RBI लोकपाल जा सकते हैं"
+      }
+    },
+    {
+      "id": "ombudsman_last_day",
+      "days": 120,
+      "working_days": false,
+      "from": "bank_report",
+      "label": {
+        "en": "Last day to file with RBI Ombudsman if bank never replied",
+        "hi": "बैंक जवाब न दे तो RBI लोकपाल में शिकायत की आखिरी तारीख"
+      }
+    }
   ],
   "comfort": {
     "en": [
